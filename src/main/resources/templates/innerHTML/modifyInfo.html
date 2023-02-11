@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑/新增书籍</title>
+</head>
+<body>
+    <form action="/books/modify"method="post">
+        <table align="center">
+            <tr>
+                <td>id:</td>
+                <td>
+                    <span th:text="${book.id}==null?'新增后自动生成':${book.id}"></span>
+                    <input name="id" th:value="${book.id}" type="hidden">
+                </td>
+            </tr>
+            <tr>
+                <td>作者</td>
+                <td><input name="author" th:value="${book.author}"></td>
+            </tr>
+            <tr>
+                <td>国标书号</td>
+                <td><input name="isbn" th:value="${book.isbn}"></td>
+            </tr>
+            <tr>
+                <td>书籍名</td>
+                <td><input name="name" th:value="${book.name}"></td>
+            </tr>
+            <tr>
+                <td>页数</td>
+                <td><input name="pages" th:value="${book.pages}"></td>
+            </tr>
+            <tr>
+                <td>价格</td>
+                <td><input name="price" th:value="${book.price}"></td>
+            </tr>
+            <tr>
+                <td>出版社</td>
+                <td><input name="publish" th:value="${book.publish}"></td>
+            </tr>
+            <tr>
+                <td>出版日期</td>
+                <td><input name="publishTime" type="date" th:value="${book.publishTime}"></td>
+            </tr>
+            <tr>
+                <td>库存</td>
+                <td><input name="size" th:value="${book.size}"></td>
+            </tr>
+            <tr>
+                <td>类型</td>
+                <td><input name="type" th:value="${book.type}"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                   <input type="submit" value="提交">
+                    <input type="button" onclick="window.history.back()" value="返回">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

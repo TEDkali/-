@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http;//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>tips</title>
+    <style type="text/css">
+        .top{
+            height: 300px;
+        }
+        .body{
+            text-align: center;
+        }
+        .tips{
+            font-size: 50px;
+        }
+        a{
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="top"></div>
+<div class="body">
+    <div th:text="${tips}" class="tips">修改成功</div>
+    <a th:href="${return}">返回</a>
+</div>
+
+</body>
+</html>

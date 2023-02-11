@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http;//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login welcome</title>
+    <style type="text/css">
+        .top{
+            height: 350px;
+        }
+        .login{
+            text-align: center;
+            margin: auto;
+        }
+        span{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="top">
+
+</div>
+    <div class="login">
+        <form method="get" action="/login/request">
+            <table align="center">
+                <tr>
+                    <td>用户名</td>
+                    <td><input name="userName" required></td>
+                </tr>
+                <tr>
+                    <td>密码</td>
+                    <td><input name="pwd" type="password" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span th:text="${message}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">记住我:<input type="checkbox" name="rememberMe"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="提交">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

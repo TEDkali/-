@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>bookList</title>
+    <style>
+        *{
+            margin: 0;
+            list-style: none;
+            padding: 0;
+        }
+        .foot{
+            margin: auto;
+        }
+        td{
+            text-align: center;
+        }
+        .HeadList{
+            background: black;
+            color: white;
+        }
+        .HeadList th{
+            border: black;
+        }
+        .BooksList{
+            background: black;
+        }
+        .BooksList td{
+            background: white;
+        }
+        a{
+            list-style: none;
+            color: black;
+        }
+        tr{
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="/bookIO/search" method="get">
+            <table width="90%">
+                <tr>
+                    <th>读者账号:<input name="userName" th:value="${userName}"></th>
+                    <th>书名:<input name="bookName" th:value="${bookName}"></th>
+                    <th>开始:<input name="startTime" th:value="${startTime}"></th>
+                    <th>结束:<input name="endTime" th:value="${endTime}"></th>
+                    <th></th>
+                    <th><input type="submit" value="搜索"></th>
+                </tr>
+            </table>
+            <table width="90%" align="center" border="none">
+                <tr class="HeadList">
+                    <th>id</th>
+                    <th>借书用户名</th>
+                    <th>书籍名</th>
+                    <th>借阅数量</th>
+                    <th>借用时间</th>
+                    <th>归还时间</th>
+                    <th th:if="${data.get(1).getReturnTime() == '/'}" shiro:hasPermission="query,update" >操作</th>
+                </tr>
+                <tr class="BooksList" th:if="${data} != null" th:each="book,bookStat:${data}">
+                    <td th:text="${book.id}"></td>
+                    <td th:text="${book.userName}"></td>
+                    <td th:text="${book.name}"></td>
+                    <td th:text="${book.number}"></td>
+                    <td th:text="${book.borrowTime}"></td>
+                    <td th:text="${book.returnTime}"></td>
+                    <td th:if="${book.returnTime == '/'}">
+                        <a onclick="return confirm('确认归还嘛?')"
+                           shiro:hasPermission="update"
+
+                           th:href="@{'/bookIO/updateStatus/'+${book.id}}">归还</a>
+<!--                        <a onclick="return confirm('确认删除嘛?')"-->
+<!--                            shiro:hasPermission="delete"-->
+<!--                            th:href="@{'/bookIO/delete/'+${book.id}}">删除</a>-->
+                    </td>
+
+                </tr>
+                <table class="foot">
+                    <tr>
+                        <td><button onclick="click(-1)">上一页</button></td>
+                        <td><span th:text="${CurrPage}"></span>/<span th:text="${TotalPage}"></span></td>
+                        <td><button onclick="click(1)">下一页</button></td>
+                    </tr>
+                </table>
+
+            </table>
+        </form>
+    </div>
+</body>
+<script  type="text/javascript" th:inline="javascript">
+    function click(number) {
+        console.log("选择的页数"+number);
+        let auhor = [[${author}]];
+        let bookName = [[${bookName}]];
+        let type = [[${type}]];
+        let page = [[${page}]]+number;
+        location.href="/books/search?author="+auhor+"&&bookName="+bookName+"&&type="+type+"&&page="+page;
+    }
+
+</script>
+</html>

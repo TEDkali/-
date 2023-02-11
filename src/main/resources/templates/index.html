@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            list-style: none;
+            padding: 0;
+        }
+        .header{
+            height: 100px;
+            background: dimgray;
+        }
+        .header h1{
+            color: white;
+        }
+        .body-left{
+            width: 15%;
+            height: 840px;
+            background: darkkhaki;
+            float: left;
+            text-align: center;
+        }
+        .body-right{
+            width: 85%;
+            height: 840px;
+            background: antiquewhite;
+            float: left;
+            text-align: center;
+        }
+        .body-left tr th{
+            font-size: 35px;
+            text-align: center;
+        }
+        .body-left tr td{
+            font-size: 30px;
+            text-align: center;
+        }
+        iframe{
+            width: 100%;
+            height: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>图书管理系统</h1>
+        <a href="/login/logout">退出登录</a>
+    </div>
+    <div class="body">
+        <div class="body-left">
+            <table>
+                <tr>
+                    <th>书籍管理</th>
+                </tr>
+                <tr>
+                    <td shiro:hasPermission="query">
+                        <a href="/books/search" target="iframe">所有书籍</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td shiro:hasPermission="update">
+                        <a href="/innerHTML/modifyInfo.html" target="iframe">书籍新增</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>借阅管理</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/bookIO/search?brType=borrow_time" target="iframe">借出记录</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/bookIO/search?brType=return_time" target="iframe">归还记录</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/bookIO/myBorrow" target="iframe">我的借阅记录</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>权限管理</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/user/list" target="iframe">账号管理</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>图书流水</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/wareHouse/list" target="iframe">图书入库记录</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>个人中心</th>
+                </tr>
+                <tr>
+                    <td>我的</td>
+                </tr>
+            </table>
+        </div>
+        <div class="body-right">
+            <iframe
+                    src="/books/search"
+                    name="iframe">
+            </iframe>
+        </div>
+    </div>
+</body>
+</html>

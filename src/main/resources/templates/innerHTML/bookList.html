@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>bookList</title>
+    <style>
+        *{
+            margin: 0;
+            list-style: none;
+            padding: 0;
+        }
+        .foot{
+            margin: auto;
+        }
+        td{
+            text-align: center;
+        }
+        .HeadList{
+            background: black;
+            color: white;
+        }
+        .HeadList th{
+            border: black;
+        }
+        .BooksList{
+            background: black;
+        }
+        .BooksList td{
+            background: white;
+        }
+        a{
+            list-style: none;
+            color: black;
+        }
+        tr{
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="/books/search" method="get">
+            <table width="90%">
+                <tr>
+                    <th>作者:<input name="author" th:value="${author}"></th>
+                    <th>书名:<input name="bookName" th:value="${bookName}"></th>
+                    <th>类型:<input name="type" th:value="${type}"></th>
+                    <th><input type="submit" value="搜索"></th>
+                </tr>
+            </table>
+            <table width="90%" align="center" border="none">
+                <tr class="HeadList">
+                    <th>id</th>
+                    <th>作者</th>
+                    <th>国标书号</th>
+                    <th>书籍名</th>
+                    <th>页数</th>
+                    <th>价格</th>
+                    <th>出版社</th>
+                    <th>出版日期</th>
+                    <th>库存</th>
+                    <th>类型</th>
+                    <th shiro:hasPermission="query,update">操作</th>
+                </tr>
+                <tr class="BooksList" th:if="${ListBook} != null" th:each="book,bookStat:${ListBook}">
+                    <td th:text="${book.id}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.isbn}"></td>
+                    <td th:text="${book.name}"></td>
+                    <td th:text="${book.pages}"></td>
+                    <td th:text="${book.price}"></td>
+                    <td th:text="${book.publish}"></td>
+                    <td th:text="${book.publishTime}"></td>
+                    <td th:text="${book.size}"></td>
+                    <td th:text="${book.type}"></td>
+                    <td>
+                        <a shiro:hasPermission="update" th:href="@{'/books/updatePre/'+${book.id}}">编辑</a>
+                        <a onclick="return confirm('确认删除嘛?')" shiro:hasPermission="delete" th:href="@{'/books/delete/'+${book.id}}">删除</a>
+                    </td>
+
+                </tr>
+                <table class="foot">
+                    <tr>
+                        <td><button onclick="click(-1)">上一页</button></td>
+                        <td><span th:text="${CurrPage}"></span>/<span th:text="${TotalPage}"></span></td>
+                        <td><button onclick="click(1)">下一页</button></td>
+                    </tr>
+                </table>
+
+            </table>
+        </form>
+    </div>
+</body>
+<script  type="text/javascript" th:inline="javascript">
+    function click(number) {
+        console.log("选择的页数"+number);
+        let auhor = [[${author}]];
+        let bookName = [[${bookName}]];
+        let type = [[${type}]];
+        let page = [[${page}]]+number;
+        location.href="/books/search?author="+auhor+"&&bookName="+bookName+"&&type="+type+"&&page="+page;
+    }
+
+</script>
+</html>

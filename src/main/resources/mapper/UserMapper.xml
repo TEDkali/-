@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ted.shiro_demo.mapper.UserMapper">
+
+    <select id="queryUserAuthority" resultType="java.lang.String">
+        SELECT authority FROM t_authority WHERE id IN
+        (SELECT  authority_id FROM role_authority WHERE role_id =
+        (SELECT role_id FROM `t_user` AS u INNER JOIN `user_role` AS ur ON u.id = ur.role_id AND user_name = #{userName}))
+    </select>
+    <select id="queryRole" resultType="java.lang.String">
+        SELECT `role` FROM t_role WHERE id =
+        (SELECT role_id FROM `t_user` AS u INNER JOIN `user_role` AS ur ON u.id = ur.role_id AND user_name = #{userName})
+    </select>
+</mapper>
